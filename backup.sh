@@ -60,7 +60,7 @@ if [ "${MYSQL_DATABASE}" == "all" ]; then
   for DB in $DATABASES; do
     SRC_FILE="${DB}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz"
     echo "Creating dump of ${DB} database from ${MYSQL_HOST}..."
-    mysqldump $MYSQL_HOST_OPTS --databases $DB --single-transaction --skip-lock-tables | gzip > $SRC_FILE
+    mysqldump $MYSQL_HOST_OPTS $MYSQLDUMP_OPTIONS --databases $DB --single-transaction --skip-lock-tables | gzip > $SRC_FILE
     
     # Encrypt the file if encryption password is set
     if [ "${ENCRYPTION_PASSWORD}" != "**None**" ]; then
@@ -82,7 +82,7 @@ else
   # Backup de um banco de dados específico
   SRC_FILE=${MYSQL_DATABASE}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz"
   echo "Creating dump of ${MYSQL_DATABASE} database from ${MYSQL_HOST}..."
-  mysqldump $MYSQL_HOST_OPTS --databases $MYSQL_DATABASE --single-transaction --skip-lock-tables | gzip > $SRC_FILE
+  mysqldump $MYSQL_HOST_OPTS $MYSQLDUMP_OPTIONS --databases $MYSQL_DATABASE --single-transaction --skip-lock-tables | gzip > $SRC_FILE
   
   # Encrypt the file if encryption password is set
   if [ "${ENCRYPTION_PASSWORD}" != "**None**" ]; then

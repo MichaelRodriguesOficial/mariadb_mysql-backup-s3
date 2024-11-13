@@ -17,7 +17,7 @@ LABEL maintainer="ITMR"
 
 RUN apk update \
     && apk upgrade \
-    && apk add coreutils mysql-client mariadb-client aws-cli openssl \
+    && apk add coreutils mysql-client mariadb-client mariadb-connector-c aws-cli openssl \
     && apk add tzdata nano \
     && cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime \
     && echo "America/Sao_Paulo" > /etc/timezone \
@@ -29,6 +29,7 @@ ENV TZ=America/Sao_Paulo
 COPY --from=build /app/out/go-cron /usr/local/bin/go-cron
 
 # Variáveis de ambiente para MariaDB/MySQL
+ENV MYSQLDUMP_OPTIONS --quote-names --quick --add-drop-table --add-locks --allow-keywords --disable-keys --extended-insert --single-transaction --create-options --comments --net_buffer_length=16384
 ENV MYSQL_DATABASE=**None**
 ENV MYSQL_HOST=**None**
 ENV MYSQL_PORT=3306
